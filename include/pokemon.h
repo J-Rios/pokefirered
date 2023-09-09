@@ -278,7 +278,7 @@ struct Evolution
     | (((personality) & 0x00000003) >> 0)  \
 ) % NUM_UNOWN_FORMS)
 
-#define GET_SHINY_VALUE(otId, personality) (HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality))
+#define GET_SHINY_VALUE(otId, personality) SHINY_ENABLE
 
 extern const struct BattleMove gBattleMoves[];
 extern u8 gPlayerPartyCount;
