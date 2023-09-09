@@ -2,11 +2,70 @@
 
 SSAnne_Exterior_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SSAnne_Exterior_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SSAnne_Exterior_OnResume
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, SSAnne_Exterior_OnFrame
 	.byte 0
 
 SSAnne_Exterior_OnTransition::
+	call_if_set FLAG_FOUGHT_MEW, SSAnne_Exterior_EventScript_HideMew
+	call_if_unset FLAG_FOUGHT_MEW, SSAnne_Exterior_EventScript_TryShowMew
 	setworldmapflag FLAG_WORLD_MAP_SSANNE_EXTERIOR
+	end
+
+SSAnne_Exterior_EventScript_HideMew::
+	setflag FLAG_HIDE_MEW
+	return
+
+SSAnne_Exterior_EventScript_TryShowMew::
+	goto_if_set FLAG_MEW_FLEW_AWAY, EventScript_Return
+	clearflag FLAG_HIDE_MEW
+	return
+
+SSAnne_Exterior_OnResume::
+	call_if_set FLAG_SYS_SPECIAL_WILD_BATTLE, SSAnne_Exterior_EventScript_TryRemoveMew
+	end
+
+SSAnne_Exterior_EventScript_TryRemoveMew::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, EventScript_Return
+	removeobject VAR_LAST_TALKED
+	return
+
+SSAnne_Exterior_EventScript_Mew::
+	goto_if_questlog EventScript_ReleaseEnd
+	special QuestLog_CutRecording
+	lock
+	faceplayer
+	waitse
+	playmoncry SPECIES_MEW, CRY_MODE_ENCOUNTER
+	message CeruleanCave_B1F_Text_Mew
+	waitmessage
+	waitmoncry
+	delay 20
+	playbgm MUS_ENCOUNTER_GYM_LEADER, 0
+	waitbuttonpress
+	setwildbattle SPECIES_MEW, 5
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	special StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SSAnne_Exterior_EventScript_DefeatedMew
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SSAnne_Exterior_EventScript_RanFromMew
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SSAnne_Exterior_EventScript_RanFromMew
+	setflag FLAG_FOUGHT_MEW
+	release
+	end
+
+SSAnne_Exterior_EventScript_DefeatedMew::
+	setflag FLAG_FOUGHT_MEW
+	goto EventScript_RemoveStaticMon
+	end
+
+SSAnne_Exterior_EventScript_RanFromMew::
+	setflag FLAG_MEW_FLEW_AWAY
+	setvar VAR_0x8004, SPECIES_MEW
+	goto EventScript_MonFlewAway
 	end
 
 SSAnne_Exterior_OnFrame::
@@ -22,7 +81,6 @@ SSAnne_Exterior_ExitSSAnne::
 	delay 50
 	special DoSSAnneDepartureCutscene
 	waitstate
-	removeobject LOCALID_SS_ANNE
 	applymovement OBJ_EVENT_ID_PLAYER, SSAnne_Exterior_Movement_Exit
 	waitmovement 0
 	setvar VAR_MAP_SCENE_VERMILION_CITY, 2

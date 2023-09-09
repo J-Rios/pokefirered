@@ -74,6 +74,9 @@ VermilionCity_Text_DontHaveNeededSSTicket::
 VermilionCity_Text_TheShipSetSail::
     .string "The ship set sail.$"
 
+VermilionCity_Text_TheShipIsBack:
+    .string "The S.S. ANNE is back.$"
+
 VermilionCity_Text_BoardSeagallopTriPass::
     .string "Ah, you have a TRI-PASS.\p"
     .string "Would you like to board\n"

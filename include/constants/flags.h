@@ -1523,7 +1523,12 @@
 #define FLAG_0x8FE                                                  (SYS_FLAGS + 0xFE)
 #define FLAG_0x8FF                                                  (SYS_FLAGS + 0xFF)
 
-#define FLAGS_COUNT (FLAG_0x8FF + 1)
+#define FLAG_CHAMPION_POKEMON 0x900
+#define FLAG_HIDE_MEW   0x901
+#define FLAG_MEW_FLEW_AWAY 0x902
+#define FLAG_FOUGHT_MEW 0x903
+
+#define FLAGS_COUNT (FLAG_FOUGHT_MEW + 1)
 
 // Special Flags (Stored in EWRAM (sSpecialFlags, not in the SaveBlock)
 #define SPECIAL_FLAGS_START           0x4000

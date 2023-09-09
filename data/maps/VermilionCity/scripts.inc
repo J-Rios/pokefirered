@@ -74,6 +74,7 @@ VermilionCity_EventScript_CheckSeagallopPresent::
 	setvar VAR_0x8004, SEAGALLOP_VERMILION_CITY
 	goto_if_ge VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 5, VermilionCity_EventScript_ChooseSeagallopDestRainbowPass
 	goto_if_ge VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 1, VermilionCity_EventScript_ChooseSeagallopDestTriPass
+	goto_if_set FLAG_CHAMPION_POKEMON, VermilionCity_EventScript_ShipIsBack
 	msgbox VermilionCity_Text_TheShipSetSail
 	release
 	end
@@ -210,11 +211,15 @@ VermilionCity_EventScript_DontHaveSSTicket::
 
 VermilionCity_EventScript_CheckSeagallopPresentTrigger::
 	setvar VAR_0x8004, SEAGALLOP_VERMILION_CITY
-	goto_if_ge VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 5, VermilionCity_EventScript_ChooseSeagallopDestRainbowPass
-	goto_if_ge VAR_MAP_SCENE_ONE_ISLAND_POKEMON_CENTER_1F, 1, VermilionCity_EventScript_ChooseSeagallopDestTriPass
+	goto_if_set FLAG_CHAMPION_POKEMON, VermilionCity_EventScript_ShipIsBack
 	msgbox VermilionCity_Text_TheShipSetSail
 	closemessage
 	goto VermilionCity_EventScript_WalkUpPier
+	end
+
+VermilionCity_EventScript_ShipIsBack::
+	msgbox VermilionCity_Text_TheShipIsBack
+	closemessage
 	end
 
 VermilionCity_EventScript_Sailor::
