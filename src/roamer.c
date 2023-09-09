@@ -86,10 +86,10 @@ void ClearRoamerData(void)
     default:\
         a = SPECIES_RAIKOU;\
         break;\
-    case SPECIES_BULBASAUR:\
+    case STARTER_POKEMON_LEFT:\
         a = SPECIES_ENTEI;\
         break;\
-    case SPECIES_CHARMANDER:\
+    case STARTER_POKEMON_RIGHT:\
         a = SPECIES_SUICUNE;\
         break;\
     }\

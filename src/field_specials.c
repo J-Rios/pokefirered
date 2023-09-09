@@ -1517,9 +1517,9 @@ void ForcePlayerToStartSurfing(void)
 }
 
 static const u16 sStarterSpecies[] = {
-    SPECIES_BULBASAUR,
-    SPECIES_SQUIRTLE,
-    SPECIES_CHARMANDER
+    STARTER_POKEMON_LEFT,
+    STARTER_POKEMON_MIDDLE,
+    STARTER_POKEMON_RIGHT
 };
 
 static u16 GetStarterSpeciesById(u16 idx)
